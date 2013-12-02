@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.geomoby.geodeals"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <!-- ****** START: GeoMoby Permissions ******* -->
+    <uses-sdk
+        android:minSdkVersion="11"
+        android:targetSdkVersion="17" />
+
+    <uses-permission android:name="android.permission.INTERNET" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.VIBRATE" >
+    </uses-permission>
+    <!-- GCM requires a Google account. -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <!-- Keeps the processor from sleeping when a message is received. -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <!-- uses-permission android:name="android.permission.NFC" / -->
+    <uses-permission android:name="com.google.android.gms.permission.ACTIVITY_RECOGNITION" />
+
+
+    <!-- Creates a custom permission so only this app can receive its messages. -->
+    <!-- Note: This custom permission name should begin with your application's package name! -->
+    <permission
+        android:name="com.geodeals.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+    <!-- These permissions are required to enable the C2DM features of the SDK. -->
+    <!-- Note: This custom permission name should begin with your application's package name! -->
+    <uses-permission android:name="com.geodeals.permission.C2D_MESSAGE" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+
+    <!-- application shows up in Google Play only for devices that have NFC hardware -->
+    <!-- uses-feature android:name="android.hardware.nfc" android:required="true" / -->
+    <!-- ****** END: GeoMoby Permissions ******* -->
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/geomoby1"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme"
+        android:debuggable="true" >
+        <activity
+            android:name="com.geomoby.geodeals.splash.SplashActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.geomoby.geodeals.MainActivity"
+            android:configChanges="orientation"
+            android:exported="false"
+            android:label="@string/title_activity_main"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.geomoby.geodeals.settings.Preferences"
+            android:theme="@style/PreferencesTheme" />
+        <activity
+            android:name="com.geomoby.geodeals.DemoService"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+
+        <!-- ****** START: GeoMoby Activities ******* -->
+        <service android:name="com.geomoby.logic.GeomobyStartService" />
+        <service android:name="com.geomoby.logic.GeomobyStopService" />
+        <service android:name="com.geomoby.service.GeomobyNotifyService" />
+        <service android:name="com.geomoby.service.ActivityRecognitionIntentService"/>
+        
+
+        <receiver android:name="com.geomoby.service.GeomobyNotifyServiceReceiver" ></receiver>
+       
+        <!-- service android:name="com.geomoby.logic.GeomobyIntentService" /-->
+
+        <!-- service android:name="com.geomoby.nfc.NFCTagService" / -->
+
+        <receiver
+            android:name="com.geomoby.logic.GeomobyReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+                <!-- This should equal your application's package name! -->
+                <category android:name="com.geomoby.geodeals" />
+            </intent-filter>
+        </receiver>
+        <!--
+        activity
+            android:name="com.geomoby.nfc.NFCTagDispatch" >
+            <intent-filter>
+                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:host="geomoby" android:scheme="geomoby" /> 
+            </intent-filter>
+        </activity
+        -->
+        <activity
+            android:name="com.geomoby.logic.DisplayNotification"
+            android:theme="@android:style/Theme.Dialog" >
+        </activity>
+        <!--
+        activity
+            android:name="com.geomoby.nfc.DisplayRedeem"
+            android:theme="@android:style/Theme.Dialog" >
+        </activity
+        -->
+        <activity
+            android:name="com.geomoby.logic.DisplayAlert"
+            android:theme="@android:style/Theme.Dialog" >
+        </activity>
+
+        <!-- ****** END: GeoMoby Activities ******* -->
+
+    </application>
+
+</manifest>

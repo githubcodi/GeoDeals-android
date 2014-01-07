@@ -7,7 +7,7 @@
     <!-- ****** START: GeoMoby Permissions ******* -->
     <uses-sdk
         android:minSdkVersion="11"
-        android:targetSdkVersion="17" />
+        android:targetSdkVersion="18" />
 
     <uses-permission android:name="android.permission.INTERNET" >
     </uses-permission>
@@ -79,12 +79,7 @@
         <service android:name="com.geomoby.service.GeomobyNotifyService" />
         <service android:name="com.geomoby.service.ActivityRecognitionIntentService"/>
         
-
         <receiver android:name="com.geomoby.service.GeomobyNotifyServiceReceiver" ></receiver>
-       
-        <!-- service android:name="com.geomoby.logic.GeomobyIntentService" /-->
-
-        <!-- service android:name="com.geomoby.nfc.NFCTagService" / -->
 
         <receiver
             android:name="com.geomoby.logic.GeomobyReceiver"
@@ -96,31 +91,19 @@
                 <category android:name="com.geomoby.geodeals" />
             </intent-filter>
         </receiver>
-        <!--
-        activity
-            android:name="com.geomoby.nfc.NFCTagDispatch" >
-            <intent-filter>
-                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <data android:host="geomoby" android:scheme="geomoby" /> 
-            </intent-filter>
-        </activity
-        -->
+
         <activity
             android:name="com.geomoby.logic.DisplayNotification"
             android:theme="@android:style/Theme.Dialog" >
         </activity>
-        <!--
-        activity
-            android:name="com.geomoby.nfc.DisplayRedeem"
-            android:theme="@android:style/Theme.Dialog" >
-        </activity
-        -->
+
         <activity
             android:name="com.geomoby.logic.DisplayAlert"
             android:theme="@android:style/Theme.Dialog" >
         </activity>
 
+         <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
+        
         <!-- ****** END: GeoMoby Activities ******* -->
 
     </application>

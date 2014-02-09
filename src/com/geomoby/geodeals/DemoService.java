@@ -34,7 +34,7 @@ import com.geomoby.logic.GeomobyStopService;
 
 public class DemoService extends Activity {
 
-	public final static String TAG = "** MainActivity **";
+	public final static String TAG = "** Demo Service **";
 	private static final String PREF = "GeoMobyPrefs";
 	final String SETTING_TAGS = "tags";
 
@@ -65,10 +65,9 @@ public class DemoService extends Activity {
 		 *  to segment your audience when creating your proximity alerts. Please mase sure that they match with
 		 *  the ones configured on your personal Admin Panel - www.geomoby.com/admin/account -> Business Tags
 		 */
-		SharedPreferences mySharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-		Log.d(TAG, mySharedPreferences.getAll().toString());
-		SharedPreferences settingsActivity = getSharedPreferences(PREF, MODE_PRIVATE);
-		SharedPreferences.Editor prefEditor = settingsActivity.edit();
+		SharedPreferences mySharedPreferences = getSharedPreferences(PREF, MODE_PRIVATE);
+		Log.d(TAG, "Saved tags: "+mySharedPreferences.getAll().toString());
+		SharedPreferences.Editor prefEditor = mySharedPreferences.edit();
 		// Build the string of tags
 		String tags = mySharedPreferences.getString("gender_pref", "unknown")+","+mySharedPreferences.getString("age_pref", "unknown");
 		// Commit the string

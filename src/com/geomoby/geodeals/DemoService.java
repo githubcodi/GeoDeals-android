@@ -110,6 +110,7 @@ public class DemoService extends Activity {
 
 	@Override
 	protected void onPause() {
+		super.onPause();
 		onDestroy();
 	}
 

@@ -56,7 +56,7 @@ public class MainActivity extends Activity {
 			startActivityForResult(i, RESULT_SETTINGS);		
 			
 		}
-		finish();
+		onDestroy();
 	}
 
 	@Override

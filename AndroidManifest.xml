@@ -28,11 +28,11 @@
     <!-- Creates a custom permission so only this app can receive its messages. -->
     <!-- Note: This custom permission name should begin with your application's package name! -->
     <permission
-        android:name="com.geodeals.permission.C2D_MESSAGE"
+        android:name="com.geomoby.geodeals.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
     <!-- These permissions are required to enable the C2DM features of the SDK. -->
     <!-- Note: This custom permission name should begin with your application's package name! -->
-    <uses-permission android:name="com.geodeals.permission.C2D_MESSAGE" />
+    <uses-permission android:name="com.geomoby.geodeals.permission.C2D_MESSAGE" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
     <!-- application shows up in Google Play only for devices that have NFC hardware -->
@@ -51,7 +51,6 @@
             android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -61,9 +60,6 @@
             android:exported="false"
             android:label="@string/title_activity_main"
             android:screenOrientation="portrait" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-            </intent-filter>
         </activity>
         <activity
             android:name="com.geomoby.geodeals.settings.Preferences"

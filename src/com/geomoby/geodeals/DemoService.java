@@ -62,15 +62,17 @@ public class DemoService extends Activity {
 
 		/*
 		 *  Save the tags in the GeoMoby shared preferences in private mode for the user. These tags will be used
-		 *  to segment your audience when creating your proximity alerts. Please mase sure that they match with
-		 *  the ones configured on your personal Admin Panel - www.geomoby.com/admin/account -> Business Tags
+		 *  to segment your audience when creating your proximity alerts. Please make sure that they match with
+		 *  the ones configured in your personal Admin Panel - www.geomoby.com/admin/account -> Business Tags
+		 *  Ex: 'test' is the default tag so make sure that it is set up in your Account page
 		 */
 		SharedPreferences mySharedPreferences = getSharedPreferences(PREF, MODE_PRIVATE);
-		Log.d(TAG, "Saved tags: "+mySharedPreferences.getAll().toString());
-		SharedPreferences.Editor prefEditor = mySharedPreferences.edit();
+		
 		// Build the string of tags
-		String tags = mySharedPreferences.getString("gender_pref", "unknown")+","+mySharedPreferences.getString("age_pref", "unknown");
+		String tags = mySharedPreferences.getString("gender_pref", "")+","+mySharedPreferences.getString("age_pref", "")+",test";
+
 		// Commit the string
+		SharedPreferences.Editor prefEditor = mySharedPreferences.edit();
 		prefEditor.putString(SETTING_TAGS, tags);
 		prefEditor.commit();
 

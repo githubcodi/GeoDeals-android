@@ -31,7 +31,7 @@ import com.geomoby.geodeals.settings.Preferences;
 @SuppressLint("NewApi")
 public class MainActivity extends Activity {
 
-	public final static String TAG = "** MainActivity **";
+	public final static String TAG = "** Main Activity **";
 	private static final String PREF = "GeoMobyPrefs";
 	private static final int RESULT_SETTINGS = 1;
 

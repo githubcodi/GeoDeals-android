@@ -75,17 +75,17 @@ public class CustomReceiver extends BroadcastReceiver {
 			Gson gson = new Gson();
 			JsonParser parser = new JsonParser();
 			JsonArray Jarray = parser.parse(message).getAsJsonArray();
-			ArrayList<GeoAlert> locations = new ArrayList<GeoAlert>();
+			ArrayList<GeoAlert> alerts = new ArrayList<GeoAlert>();
 			for(JsonElement obj : Jarray ){
 				GeoAlert gName = gson.fromJson(obj,GeoAlert.class);
-				locations.add(gName);
+				alerts.add(gName);
 			}
 
 			// Send Notification
 			NotificationManager notificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
 
 			Intent i = new Intent(context, CustomNotification.class);
-			i.putParcelableArrayListExtra("GeoAlert", (ArrayList<GeoAlert>) locations);
+			i.putParcelableArrayListExtra("GeoAlert", (ArrayList<GeoAlert>) alerts);
 
 			PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
 

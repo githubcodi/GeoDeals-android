@@ -76,7 +76,7 @@
         
         <receiver android:name="com.geomoby.service.GeomobyNotifyServiceReceiver" ></receiver>
         <receiver
-            android:name="com.geomoby.logic.CustomReceiver"
+            android:name="com.geomoby.geodeals.receiver.CustomReceiver"
             android:permission="com.google.android.c2dm.permission.SEND" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
@@ -87,14 +87,14 @@
         </receiver>
 
         <activity
-            android:name="com.geomoby.logic.CustomNotification"
+            android:name="com.geomoby.geodeals.notification.CustomNotification"
             android:theme="@android:style/Theme.Dialog" >
         </activity>
 
-        <activity
+        <!--activity
             android:name="com.geomoby.logic.DisplayAlert"
             android:theme="@android:style/Theme.Dialog" >
-        </activity>
+        </activity-->
 
          <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
         

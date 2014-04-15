@@ -67,6 +67,13 @@
             android:name="com.geomoby.geodeals.DemoService"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
+        
+        <!-- Start the Service if applicable on boot -->
+		<receiver android:name="com.geomoby.geodeals.receiver.ServiceStarter">
+    		<intent-filter>
+        		<action android:name="android.intent.action.BOOT_COMPLETED"/>
+    		</intent-filter>
+		</receiver>
 
         <!-- ****** START: GeoMoby Activities ******* -->
         <service android:name="com.geomoby.logic.GeomobyStartService" />

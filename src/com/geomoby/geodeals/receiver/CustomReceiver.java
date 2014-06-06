@@ -105,9 +105,9 @@ public class CustomReceiver extends BroadcastReceiver {
 
 					builder
 					.setSmallIcon(icon)
-					.setContentTitle("Coupon City Alert!")
+					.setContentTitle("Geo Alert!")
 					.setContentText("Click Now!")
-					.setTicker("Coupon City Alert!")
+					.setTicker("Geo Alert!")
 					.setContentIntent(pendingIntent)
 					.setAutoCancel(true);
 
@@ -118,14 +118,14 @@ public class CustomReceiver extends BroadcastReceiver {
 					notificationManager.notify(notifyID,builder.build());
 
 				}else{
-					Notification notification = new Notification(icon,"Coupon City Alert!",System.currentTimeMillis());
+					Notification notification = new Notification(icon,"Geo Alert!",System.currentTimeMillis());
 
 					//Setting Notification Flags
 					notification.defaults |= Notification.DEFAULT_ALL;
 					notification.flags |= Notification.FLAG_AUTO_CANCEL;
 
 					//Set the Notification Info
-					notification.setLatestEventInfo(context, "Coupon City Alert!", "Click Now !", pendingIntent);
+					notification.setLatestEventInfo(context, "Geo Alert!", "Click Now !", pendingIntent);
 
 					//Send the notification
 					// Because the ID remains unchanged, the existing notification is updated.

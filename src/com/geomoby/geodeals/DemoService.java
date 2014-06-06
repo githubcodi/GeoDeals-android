@@ -23,10 +23,14 @@ package com.geomoby.geodeals;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.geomoby.logic.GeomobyStartService;
@@ -41,13 +45,14 @@ public class DemoService extends Activity {
 	boolean isCheckedStatus;
 	final String PREF_NAME="checked";
 	public SharedPreferences spref;
+	CompoundButton toggle;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		CompoundButton toggle = (CompoundButton) findViewById(R.id.togglebutton); // You can also use a normal "ToggleButton" - ToggleButton toggle = (ToggleButton) findViewById(R.id.togglebutton);
+		toggle = (CompoundButton) findViewById(R.id.togglebutton); // You can also use a normal "ToggleButton" - ToggleButton toggle = (ToggleButton) findViewById(R.id.togglebutton);
 
 		spref = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
 		isCheckedStatus = spref.getBoolean("check", false);  //default is false
@@ -67,7 +72,7 @@ public class DemoService extends Activity {
 		 *  Ex: 'test' is the default tag so make sure that it is set up in your Account page
 		 */
 		SharedPreferences mySharedPreferences = getSharedPreferences(PREF, MODE_PRIVATE);
-		
+
 		// Build the string of tags
 		String tags = mySharedPreferences.getString("gender_pref", "")+","+mySharedPreferences.getString("age_pref", "")+",test";
 
@@ -84,7 +89,10 @@ public class DemoService extends Activity {
 
 
 				if (isChecked == false) {
-					Log.d(TAG,"Stopping Notify Service");	
+
+					toggle.setPressed(false);
+
+					//Log.d(TAG,"Stopping Notification Service");	
 					// Stop the GeoMoby tracking service
 					startService(new Intent(DemoService.this, GeomobyStopService.class));
 
@@ -93,12 +101,37 @@ public class DemoService extends Activity {
 					editor.commit();
 
 				}else{
+
+					toggle.setPressed(true);
+
 					// Start the GeoMoby tracking service
 					startService(new Intent(DemoService.this, GeomobyStartService.class));
-					Toast.makeText(getApplicationContext(), "Well Done! The service is now running in the background. You can leave the app!",Toast.LENGTH_LONG).show();
+
 					SharedPreferences.Editor editor = spref.edit();
 					editor.putBoolean("check", true);
 					editor.commit();
+
+
+					LayoutInflater inflater = getLayoutInflater();
+					// Inflate the Layout
+					View layout = inflater.inflate(R.layout.custom_toast, (ViewGroup) findViewById(R.id.custom_toast_layout));
+
+					// Set the Text to show in TextView
+
+					TextView text = (TextView) layout.findViewById(R.id.textToShow);
+					text.setText("GREAT! YOU ARE READY TO RECEIVE REAL-TIME NOTIFICATIONS!");
+					Typeface face;
+					face = Typeface.createFromAsset(getAssets(), "Bitter-Bold.otf");
+					text.setTypeface(face);
+
+					Toast toast = new Toast(getApplicationContext());
+					toast.setGravity(Gravity.BOTTOM, 0, 50);
+					toast.setDuration(Toast.LENGTH_LONG);
+					toast.setView(layout);
+					toast.show();
+
+					//Toast.makeText(getApplicationContext(), "Great! You'll be receiving live offers soon!",Toast.LENGTH_LONG).show();
+
 				}
 			}
 		});

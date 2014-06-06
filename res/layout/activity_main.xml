@@ -2,8 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="#CDEB8B"
+    android:layout_height="match_parent"
+    android:background="#FAFAFA"
     android:orientation="vertical" >
 
     <TextView
@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         tools:context=".MainActivity" />
 
- 	<ImageView
+    <ImageView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:contentDescription="@string/splash_desc"
@@ -22,26 +22,30 @@
         android:layout_width="250dip"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:background="@drawable/green_button"
+        android:background="@drawable/submit"
+        android:textColor="#FFFFFF"
         android:textOff="@string/monitored_service_on"
         android:textOn="@string/monitored_service_off"
         android:textStyle="bold" />
-    
+
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:layout_below="@id/togglebutton"
+        android:gravity="center"
         android:text="@string/legal"
-        android:textSize="12sp"
-        android:layout_below="@id/togglebutton" 
-        android:gravity="center"/>
+        android:textColor="#0088D7"
+        android:textSize="12sp" />
 
-    <!--Button
+    <!--
+        Button
         android:id="@+id/mysettings"
         android:layout_width="250dip"
         android:layout_height="wrap_content"
         android:layout_below="@id/togglebutton"
         android:layout_centerHorizontal="true"
         android:background="@drawable/green_button"
-        android:text="@string/mysettings" -->
+        android:text="@string/mysettings"
+    -->
 
 </RelativeLayout>

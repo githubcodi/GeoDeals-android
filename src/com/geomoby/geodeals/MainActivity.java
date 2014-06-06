@@ -26,8 +26,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import com.geomoby.geodeals.settings.Preferences;
-
 @SuppressLint("NewApi")
 public class MainActivity extends Activity {
 
@@ -39,23 +37,9 @@ public class MainActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		SharedPreferences settingsActivity = getSharedPreferences(PREF, MODE_PRIVATE);
+		Intent i = new Intent(this, DemoService.class);
+		startActivityForResult(i, RESULT_SETTINGS);		
 
-		/*
-		 * Detects when the user open the app for the first time and display the Preferences form
-		 * Otherwise, start DemoService activity
-		 */
-		if(!settingsActivity.getBoolean("firstTime", false)) {
-
-			Intent i = new Intent(this, Preferences.class);
-			startActivityForResult(i, RESULT_SETTINGS);
-			
-		}else{
-			
-			Intent i = new Intent(this, DemoService.class);
-			startActivityForResult(i, RESULT_SETTINGS);		
-			
-		}
 		onDestroy();
 	}
 

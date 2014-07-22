@@ -15,14 +15,18 @@ public class ServiceStarter extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
     	
-    	Log.d("ServiceStarter", "Resetting ON/OFF button...");
-    	
     	SharedPreferences spref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
-    	SharedPreferences.Editor editor = spref.edit();
-		editor.putBoolean("check", true);
-		editor.commit();
+
+    	// User privacy - Restart the service only if the service was activated before the device reboot
+		if ( spref.getBoolean("check",false) == true){
+			Log.d("ServiceStarter", "Restart the GeoMoby service...");
+			// Start the GeoMoby tracking service
+	    	context.startService(new Intent(context, GeomobyStartService.class));
+		}
+    	
+    	//SharedPreferences.Editor editor = spref.edit();
+		//editor.putBoolean("check", true);
+		//editor.commit();
 		
-		// Start the GeoMoby tracking service
-    	context.startService(new Intent(context, GeomobyStartService.class));
     }
 }

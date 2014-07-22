@@ -12,10 +12,12 @@
         tools:context=".MainActivity" />
 
     <ImageView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="50px"
+        android:layout_centerHorizontal="true"
         android:contentDescription="@string/splash_desc"
-        android:src="@drawable/geomoby1" />
+        android:src="@drawable/geomoby_logo" />
 
     <ToggleButton
         android:id="@+id/togglebutton"
@@ -28,24 +30,13 @@
         android:textOn="@string/monitored_service_off"
         android:textStyle="bold" />
 
-    <TextView
+    <!--TextView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_below="@id/togglebutton"
         android:gravity="center"
-        android:text="@string/legal"
+        android:text="@string/disclaimer"
         android:textColor="#0088D7"
-        android:textSize="12sp" />
-
-    <!--
-        Button
-        android:id="@+id/mysettings"
-        android:layout_width="250dip"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/togglebutton"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/green_button"
-        android:text="@string/mysettings"
-    -->
+        android:textSize="12sp" /-->
 
 </RelativeLayout>

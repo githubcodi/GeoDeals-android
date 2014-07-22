@@ -41,7 +41,7 @@ public class SplashActivity extends Activity {
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);	// Removes title bar
 		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); // Removes notification bar
 
-		setContentView(R.layout.activity_splash);
+		setContentView(R.layout.geomoby_splash);
 
 		// Start timer and launch main activity
 		IntentLauncher launcher = new IntentLauncher();

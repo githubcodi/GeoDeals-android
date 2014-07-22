@@ -50,10 +50,10 @@ public class DemoService extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		setContentView(R.layout.geomoby_main);
 
-		toggle = (CompoundButton) findViewById(R.id.togglebutton); // You can also use a normal "ToggleButton" - ToggleButton toggle = (ToggleButton) findViewById(R.id.togglebutton);
-
+		toggle = (CompoundButton) findViewById(R.id.togglebutton); 
+		
 		spref = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
 		isCheckedStatus = spref.getBoolean("check", false);  //default is false
 
@@ -68,7 +68,7 @@ public class DemoService extends Activity {
 		/*
 		 *  Save the tags in the GeoMoby shared preferences in private mode for the user. These tags will be used
 		 *  to segment your audience when creating your proximity alerts. Please make sure that they match with
-		 *  the ones configured in your personal Admin Panel - www.geomoby.com/admin/account -> Business Tags
+		 *  the ones configured in your dashboard when you create an alert.
 		 *  Ex: 'test' is the default tag so make sure that it is set up in your Account page
 		 */
 		SharedPreferences mySharedPreferences = getSharedPreferences(PREF, MODE_PRIVATE);
@@ -114,7 +114,7 @@ public class DemoService extends Activity {
 
 					LayoutInflater inflater = getLayoutInflater();
 					// Inflate the Layout
-					View layout = inflater.inflate(R.layout.custom_toast, (ViewGroup) findViewById(R.id.custom_toast_layout));
+					View layout = inflater.inflate(R.layout.geomoby_toast, (ViewGroup) findViewById(R.id.custom_toast_layout));
 
 					// Set the Text to show in TextView
 

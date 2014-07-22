@@ -56,7 +56,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.geomoby.async.ClickThroughAsyncTask;
-import com.geomoby.async.GeoAlert;
+import com.geomoby.async.GeoMessage;
 import com.geomoby.geodeals.R;
 import com.geomoby.logic.DisplayNotification;
 
@@ -73,19 +73,19 @@ public class CustomNotification extends Activity implements OnGestureListener, O
 		//Hide Title Bar
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-		setContentView(R.layout.offer);
+		setContentView(R.layout.geomoby_offer);
 
 		Intent intent = getIntent();
 
-		ArrayList<GeoAlert> geoAlert = intent.getParcelableArrayListExtra("GeoAlert");
+		ArrayList<GeoMessage> geoMessage = intent.getParcelableArrayListExtra("GeoMessage");
 
-		String title = geoAlert.get(0).title;
-		String link = geoAlert.get(0).link;
-		String image_url = geoAlert.get(0).imageurl;
-		String description = geoAlert.get(0).description;
-		final double latitude = Double.valueOf(geoAlert.get(0).geofence_latitude);
-		final double longitude = Double.valueOf(geoAlert.get(0).geofence_longitude);
-		int notification_id = geoAlert.get(0).notification_id;
+		String title = geoMessage.get(0).title;
+		String link = geoMessage.get(0).siteURL;
+		String image_url = geoMessage.get(0).imageURL;
+		String description = geoMessage.get(0).message;
+		final double latitude = Double.valueOf(geoMessage.get(0).latitude);
+		final double longitude = Double.valueOf(geoMessage.get(0).longitude);
+		int notification_id = geoMessage.get(0).id;
 
 
 		Button btnClose = (Button) findViewById(R.id.close);
@@ -100,10 +100,6 @@ public class CustomNotification extends Activity implements OnGestureListener, O
 		Button btnNearest = (Button) findViewById(R.id.nearest);
 		btnNearest.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				//final double latitude = -31.953679;
-				//final double longitude = 115.858505;
-
-
 				SharedPreferences settingsActivity = CustomNotification.this.getSharedPreferences("GeoMobyPrefs", MODE_PRIVATE);
 				final double myLatitude = Double.valueOf(settingsActivity.getString(SETTING_LAT, ""));
 				final double myLongitude = Double.valueOf(settingsActivity.getString(SETTING_LNG, ""));
@@ -112,7 +108,6 @@ public class CustomNotification extends Activity implements OnGestureListener, O
 				Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?f=d&saddr="+myLatitude+","+myLongitude+"&daddr="+latitude+","+longitude+ "&dirflg=w"));
 				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 				context.startActivity(intent);
-				//finish();
 			}
 		});
 
@@ -134,10 +129,11 @@ public class CustomNotification extends Activity implements OnGestureListener, O
 		tvLink.setMovementMethod(LinkMovementMethod.getInstance());
 
 		// Warning - Big bitmap images might create errors
-		new DownloadImageTask((ImageView) findViewById(R.id.image)).execute(image_url);
+		if(!image_url.equals(""))
+			new DownloadImageTask((ImageView) findViewById(R.id.image)).execute(image_url);
 
 		//Notify GeoMoby server that user has opened the notification
-		new ClickThroughAsyncTask(this).execute(notification_id);
+		//new ClickThroughAsyncTask(this).execute(notification_id);
 	}
 
 	private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {

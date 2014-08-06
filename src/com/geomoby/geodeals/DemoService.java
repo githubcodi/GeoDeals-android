@@ -74,7 +74,7 @@ public class DemoService extends Activity {
 		SharedPreferences mySharedPreferences = getSharedPreferences(PREF, MODE_PRIVATE);
 
 		// Build the string of tags
-		String tags = mySharedPreferences.getString("gender_pref", "")+","+mySharedPreferences.getString("age_pref", "")+",test";
+		String tags = "test";
 
 		// Commit the string
 		SharedPreferences.Editor prefEditor = mySharedPreferences.edit();

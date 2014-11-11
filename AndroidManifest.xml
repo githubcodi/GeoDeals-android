@@ -75,7 +75,7 @@
         
         <receiver android:name="com.geomoby.service.GeomobyNotifyServiceReceiver" ></receiver>
         <receiver
-            android:name="com.geomoby.geodeals.receiver.CustomReceiver"
+            android:name="com.geomoby.logic.GeomobyNotificationsReceiver"
             android:permission="com.google.android.c2dm.permission.SEND" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />

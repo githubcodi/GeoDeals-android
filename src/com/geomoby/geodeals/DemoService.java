@@ -49,8 +49,7 @@ import android.widget.Toast;
 
 import com.geomoby.async.GeoMessage;
 import com.geomoby.geodeals.notification.CustomNotification;
-import com.geomoby.logic.GeomobyNotificationsReceiver;
-import com.geomoby.logic.GeomobyNotificationsReceiver.GMNotificationsListener;
+
 import com.geomoby.logic.GeomobyStartService;
 import com.geomoby.logic.GeomobyStopService;
 import com.google.gson.Gson;
@@ -58,6 +57,9 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
+
+import com.geomoby.logic.GeomobyNotificationsReceiver;
+import com.geomoby.logic.GeomobyNotificationsReceiver.GMNotificationsListener;
 
 public class DemoService extends Activity implements GMNotificationsListener {
 
@@ -179,11 +181,11 @@ public class DemoService extends Activity implements GMNotificationsListener {
 		onDestroy();
 	}
 	
-	@Override
-	public void onNotificationReceived(String message) {
-		Log.d(TAG,"Notification Received!");
-		generateNotification(mContext, message);
-	}
+		@Override
+		public void onNotificationReceived(String message) {
+			Log.d(TAG,"Notification Received!");
+			generateNotification(mContext, message);
+		}
 	
 	/**
 	 * Issues a notification to inform the user that server has sent a message.

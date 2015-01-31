@@ -20,25 +20,11 @@
  */
 package com.geomoby.geodeals;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Properties;
-
 import android.app.Activity;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.AssetManager;
-import android.content.res.Resources;
 import android.graphics.Typeface;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,28 +33,13 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.geomoby.async.GeoMessage;
-import com.geomoby.geodeals.notification.CustomNotification;
+import com.geomoby.GeoMoby;
 
-import com.geomoby.logic.GeomobyStartService;
-import com.geomoby.logic.GeomobyStopService;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParseException;
-import com.google.gson.JsonParser;
-
-import com.geomoby.logic.GeomobyNotificationsReceiver;
-import com.geomoby.logic.GeomobyNotificationsReceiver.GMNotificationsListener;
-
-public class DemoService extends Activity implements GMNotificationsListener {
+public class DemoService extends Activity {
 
 	private static final String TAG = "** Demo Service **";
-	private static final String PREF = "GeoMobyPrefs";
-	private static final String SETTING_TAGS = "tags";
 	private static final String PREF_NAME="checked";
 	private static SharedPreferences spref;
-	private static int notifyID = 1; 	// Sets an ID for the notification, so it can be updated
 	
 	boolean isCheckedStatus;
 	CompoundButton mToggle;
@@ -80,8 +51,63 @@ public class DemoService extends Activity implements GMNotificationsListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.geomoby_main);
 		mContext = this;
+		
+		GeoMoby.init(this);
 
 		mToggle = (CompoundButton) findViewById(R.id.togglebutton); 
+		
+		/*
+		 * Set your GeoMoby Api Key (required)
+		 */
+		String api_key="8df4c81d79e332df65a963";
+		GeoMoby.setApiKey(api_key);
+		
+		/*
+		 *  Save the tags in the GeoMoby shared preferences in private mode for the user. These tags will be used
+		 *  to segment your audience when creating your proximity alerts. Please make sure that they match with
+		 *  the ones configured in your dashboard when you create an alert.
+		 *  Ex: 'test' is the default tag so make sure that it is set up in your Account page
+		 *
+		 * Build the string of tags - empty for testing. Make sure that you create your first geofences with no tags in your dashboard.
+		 * Add your own logic here: "male,vip,monday"...
+		 */
+		String tags = "";
+		GeoMoby.setTags(tags);
+		
+		/*
+		 *  Filter events based on users activity (still,walking,cycling,driving,tilting - default:walking - debug:tilting)
+		 *  You can also filter several activities using '|' as a separator (tilting|walking)
+		 */  
+		String motion_filter = "walking|still";
+		GeoMoby.setMotionFilter(motion_filter);
+		
+		/*
+		 *  This setting corresponds to the minimum time interval between 2 GeoMoby service calls (in seconds) - Recommended 60s.
+		 */
+		String updateIntervalSeconds = "60";
+		GeoMoby.setUpdateInterval(updateIntervalSeconds);
+
+		/*
+		 *  Silence Time is the time window when no notifications can be sent (24 hour)
+		 */
+		String silence_start = "23";
+		String silence_stop = "05";
+		GeoMoby.setSilenceTimeStart(silence_start);
+		GeoMoby.setSilenceTimeStop(silence_stop);
+
+
+		/* Turn development mode on and off (yes/no)
+		* dev_mode=true consumes a bit more battery 
+		* dev_mode=false is the production mode as it gets the most out of our optimised battery management
+		*/
+		String dev_mode = "true";
+		GeoMoby.setDevMode(dev_mode);
+		
+		/*
+		 * This Demo only allows GeoMoby outdoor location services. Contact contact@geomoby.com to know more about our indoor services.
+		 */
+		GeoMoby.setIndoorLocationService("false");
+		GeoMoby.setOutdoorLocationService("true");
 		
 		spref = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
 		isCheckedStatus = spref.getBoolean("check", false);  //default is false
@@ -89,28 +115,13 @@ public class DemoService extends Activity implements GMNotificationsListener {
 		/*
 		 * Set up toggle status
 		 */
-		if (!isCheckedStatus) 
+		if (!isCheckedStatus){
 			mToggle.setChecked(false);
-		else
+		}else{
 			mToggle.setChecked(true);
-
-		/*
-		 *  Save the tags in the GeoMoby shared preferences in private mode for the user. These tags will be used
-		 *  to segment your audience when creating your proximity alerts. Please make sure that they match with
-		 *  the ones configured in your dashboard when you create an alert.
-		 *  Ex: 'test' is the default tag so make sure that it is set up in your Account page
-		 */
-		SharedPreferences mySharedPreferences = getSharedPreferences(PREF, MODE_PRIVATE);
-
-		// Build the string of tags - empty for testing. Make sure that you create your first geofences with no tags in your dashboard.
-		// Add your own logic here: "male,vip,monday"...
-		String tags = "";
-
-		// Commit the string
-		SharedPreferences.Editor prefEditor = mySharedPreferences.edit();
-		prefEditor.putString(SETTING_TAGS, tags);
-		prefEditor.commit();
-
+			//GeoMoby.start(); // Restart GeoMoby Location Service
+		}
+		
 		/*
 		 *  Monitor the toggle - Our SDK will ensure that all services are running/stopping properly
 		 */
@@ -122,7 +133,7 @@ public class DemoService extends Activity implements GMNotificationsListener {
 					mToggle.setPressed(false);
 
 					// Stop the GeoMoby tracking service
-					startService(new Intent(DemoService.this, GeomobyStopService.class));
+					GeoMoby.stop();
 
 					SharedPreferences.Editor editor = spref.edit();
 					editor.putBoolean("check", false);
@@ -133,7 +144,8 @@ public class DemoService extends Activity implements GMNotificationsListener {
 					mToggle.setPressed(true);
 
 					// Start the GeoMoby tracking service
-					startService(new Intent(DemoService.this, GeomobyStartService.class));
+					//startService(new Intent(DemoService.this, GeomobyStartService.class));
+					GeoMoby.start();
 
 					SharedPreferences.Editor editor = spref.edit();
 					editor.putBoolean("check", true);
@@ -158,10 +170,6 @@ public class DemoService extends Activity implements GMNotificationsListener {
 				}
 			}
 		});
-		
-		// Initialise GeoMoby Notification Listener
-		GeomobyNotificationsReceiver receiver = new GeomobyNotificationsReceiver();
-		receiver.setNotificationListener(this);
 	}
 
 	@Override
@@ -179,90 +187,5 @@ public class DemoService extends Activity implements GMNotificationsListener {
 	@Override
 	public void onBackPressed() {
 		onDestroy();
-	}
-	
-		@Override
-		public void onNotificationReceived(String message) {
-			Log.d(TAG,"Notification Received!");
-			generateNotification(mContext, message);
-		}
-	
-	/**
-	 * Issues a notification to inform the user that server has sent a message.
-	 */
-	private static void generateNotification(Context context, String message) {
-		if(message.length() > 0) {
-			
-			// Parse the GeoMoby message using the GeoMessage class
-			try{
-				Gson gson = new Gson();
-				JsonParser parser = new JsonParser();
-				JsonArray Jarray = parser.parse(message).getAsJsonArray();
-				ArrayList<GeoMessage> alerts = new ArrayList<GeoMessage>();
-				for(JsonElement obj : Jarray ){
-					GeoMessage gName = gson.fromJson(obj,GeoMessage.class);
-					alerts.add(gName);
-				}
-
-				// Prepare Notification and pass the GeoMessage to an Extra
-				NotificationManager notificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
-				Intent i = new Intent(context, CustomNotification.class);
-				i.putParcelableArrayListExtra("GeoMessage", (ArrayList<GeoMessage>) alerts);
-				PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
-	
-				// Read from the /assets directory
-				Resources resources = context.getResources();
-				AssetManager assetManager = resources.getAssets();
-				try {
-					InputStream inputStream = assetManager.open("geomoby.properties");
-					Properties properties = new Properties();
-					properties.load(inputStream);
-					String push_icon = properties.getProperty("push_icon");
-					int icon = resources.getIdentifier(push_icon , "drawable", context.getPackageName());
-					int not_title = resources.getIdentifier("notification_title" , "string", context.getPackageName());
-					int not_text = resources.getIdentifier("notification_text" , "string", context.getPackageName());
-					int not_ticker = resources.getIdentifier("notification_ticker" , "string", context.getPackageName());
-	
-					// Manage notifications differently according to Android version
-					if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-						NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
-	
-						builder
-						.setSmallIcon(icon)
-						.setContentTitle(context.getResources().getText(not_title))
-						.setContentText(context.getResources().getText(not_text))
-						.setTicker(context.getResources().getText(not_ticker))
-						.setContentIntent(pendingIntent)
-						.setAutoCancel(true);
-	
-						builder
-						.setDefaults(Notification.DEFAULT_ALL); //Vibrate, Sound and Led
-	
-						// Because the ID remains unchanged, the existing notification is updated.
-						notificationManager.notify(notifyID,builder.build());
-	
-					}else{
-						Notification notification = new Notification(icon,context.getResources().getText(not_text),System.currentTimeMillis());
-	
-						//Setting Notification Flags
-						notification.defaults |= Notification.DEFAULT_ALL;
-						notification.flags |= Notification.FLAG_AUTO_CANCEL;
-	
-						//Set the Notification Info
-						notification.setLatestEventInfo(context, context.getResources().getText(not_text), context.getResources().getText(not_ticker), pendingIntent);
-	
-						//Send the notification
-						// Because the ID remains unchanged, the existing notification is updated.
-						notificationManager.notify(notifyID, notification);
-					}
-				} catch (IOException e) {
-					System.err.println("Failed to open geomoby property file");
-					e.printStackTrace();
-				}
-			}catch ( JsonParseException e) {
-				Log.i(TAG,"This is not a GeoMoby notification");
-				throw new RuntimeException(e);
-			}
-		}
-	}
+	}	
 }

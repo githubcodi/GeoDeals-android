@@ -19,6 +19,8 @@
     <uses-permission android:name="com.google.android.gms.permission.ACTIVITY_RECOGNITION" />
     <uses-permission android:name="android.permission.UPDATE_APP_OPS_STATS" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
 
     <!-- Creates a custom permission so only this app can receive its messages. -->
     <!-- Note: This custom permission name should begin with your application's package name! -->
@@ -73,9 +75,10 @@
         <service android:name="com.geomoby.service.GeomobyNotifyService" />
         <service android:name="com.geomoby.service.GeomobyActivityService"/>
         
-        <receiver android:name="com.geomoby.service.GeomobyNotifyServiceReceiver" ></receiver>
+        <receiver android:name="com.geomoby.service.GeomobyNotifyServiceReceiver" >    
+        </receiver>
         <receiver
-            android:name="com.geomoby.logic.GeomobyNotificationsReceiver"
+            android:name="com.geomoby.geodeals.receiver.GeodealsMessageReceiver"
             android:permission="com.google.android.c2dm.permission.SEND" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />

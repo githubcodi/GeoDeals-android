@@ -1,9 +1,18 @@
 package com.geomoby.geodeals.receiver;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Properties;
+
+import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.res.Resources;
+import android.os.Build;
+import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 
 import com.geomoby.async.GeoMessage;
 import com.geomoby.geodeals.notification.CustomNotification;
@@ -13,19 +22,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
 
-import android.app.Activity;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.res.AssetManager;
-import android.content.res.Resources;
-import android.os.Build;
-import android.support.v4.app.NotificationCompat;
-import android.util.Log;
-
 public  class GeodealsMessageReceiver extends BroadcastReceiver {
 
 	private static final String TAG = "** Geodeals Message Receiver **";
@@ -33,12 +29,13 @@ public  class GeodealsMessageReceiver extends BroadcastReceiver {
 	
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		String message = intent.getExtras().getString("message");
+		String GMMessage = intent.getExtras().getString("geomoby");
 
-		if(message != null){
+		if(GMMessage != null){
 			// Detect that it is a GeoMoby GCM message
-			Log.d(TAG,"Notification Received!");
-			generateNotification(context, message);
+			Log.d(TAG,"Notification Received: "+ GMMessage);
+			
+			generateNotification(context, GMMessage);
 			
 		}
 		setResultCode(Activity.RESULT_OK);

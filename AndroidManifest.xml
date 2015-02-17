@@ -74,6 +74,7 @@
         <service android:name="com.geomoby.logic.GeomobyStopService" />
         <service android:name="com.geomoby.service.GeomobyNotifyService" />
         <service android:name="com.geomoby.service.GeomobyActivityService"/>
+        <service android:name="com.geomoby.ibeacon.service.IBeaconService" />
         
         <receiver android:name="com.geomoby.service.GeomobyNotifyServiceReceiver" >    
         </receiver>

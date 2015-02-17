@@ -90,7 +90,7 @@ public class DemoService extends Activity {
 		/*
 		 *  Silence Time is the time window when no notifications can be sent (24 hour)
 		 */
-		String silence_start = "23";
+		String silence_start = "01";
 		String silence_stop = "05";
 		GeoMoby.setSilenceTimeStart(silence_start);
 		GeoMoby.setSilenceTimeStop(silence_stop);
@@ -104,10 +104,17 @@ public class DemoService extends Activity {
 		GeoMoby.setDevMode(dev_mode);
 		
 		/*
-		 * This Demo only allows GeoMoby outdoor location services. Contact contact@geomoby.com to know more about our indoor services.
-		 */
-		GeoMoby.setIndoorLocationService("false");
-		GeoMoby.setOutdoorLocationService("true");
+		*  Set the GeoMoby Outdoor Location service - 5-10m accuracy outdoors and about 20m indoors (no iBeacons needed)
+		*/
+		GeoMoby.setOutdoorLocationService("false");
+		
+		/*
+		*  Set the GeoMoby iBeacon Location service
+		*
+		*  You can set both indoor and outdoor to "true" for a end-to-end monitoring experience
+		*/
+		GeoMoby.setIndoorLocationService("true");
+		GeoMoby.setUUID("e2c56db5-dffb-48d2-b060-d0f5a71096e0");
 		
 		spref = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
 		isCheckedStatus = spref.getBoolean("check", false);  //default is false
@@ -119,7 +126,6 @@ public class DemoService extends Activity {
 			mToggle.setChecked(false);
 		}else{
 			mToggle.setChecked(true);
-			//GeoMoby.start(); // Restart GeoMoby Location Service
 		}
 		
 		/*

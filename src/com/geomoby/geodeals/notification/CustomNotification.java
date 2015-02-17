@@ -24,10 +24,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -36,29 +33,20 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.view.GestureDetectorCompat;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
-import android.view.GestureDetector;
 import android.view.GestureDetector.OnDoubleTapListener;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnTouchListener;
-import android.view.ViewGroup;
 import android.view.Window;
-import android.view.WindowManager;
-import android.webkit.WebSettings.LayoutAlgorithm;
-import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.geomoby.async.ClickThroughAsyncTask;
 import com.geomoby.async.GeoMessage;
 import com.geomoby.geodeals.R;
-import com.geomoby.logic.DisplayNotification;
 
 public class CustomNotification extends Activity implements OnGestureListener, OnDoubleTapListener {
 
@@ -85,6 +73,8 @@ public class CustomNotification extends Activity implements OnGestureListener, O
 		String description = geoMessage.get(0).message;
 		final double latitude = Double.valueOf(geoMessage.get(0).latitude);
 		final double longitude = Double.valueOf(geoMessage.get(0).longitude);
+		String beaconName = geoMessage.get(0).micronodeName;
+		int beaconProximity = geoMessage.get(0).micronodeProximity;
 		int notification_id = geoMessage.get(0).id;
 
 

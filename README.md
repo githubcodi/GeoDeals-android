@@ -9,11 +9,10 @@ Set Up
 **Your GeoMoby API Key**
 
 String api_key="8df4c81d79e332df65a963";
-
 GeoMoby.setApiKey(api_key);
 
-//  Filter events based on users activity (still,walking,cycling,driving,tilting - default:walking - debug:tilting)
-//  You can also filter several activities using '|' as a separator (tilting|walking)
+**Filter events based on users activity (still,walking,cycling,driving,tilting - default:walking - debug:tilting)**
+**You can also filter several activities using '|' as a separator (tilting|walking)**
 
 String motion_filter = "walking|still";
 

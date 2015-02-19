@@ -46,6 +46,7 @@ String dev_mode = "true";
 GeoMoby.setDevMode(dev_mode);
 
 **Set the GeoMoby Outdoor Location service - 5-10m accuracy outdoors and about 20m indoors (no iBeacons needed)**
+
 GeoMoby.setOutdoorLocationService("false");
 
 

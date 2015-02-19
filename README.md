@@ -9,22 +9,31 @@ Set Up
 // Your GeoMoby API Key
 
 String api_key="8df4c81d79e332df65a963";
+
 GeoMoby.setApiKey(api_key);
 
 //  Filter events based on users activity (still,walking,cycling,driving,tilting - default:walking - debug:tilting)
 //  You can also filter several activities using '|' as a separator (tilting|walking)
+
 String motion_filter = "walking|still";
+
 GeoMoby.setMotionFilter(motion_filter);
 
 //  This setting corresponds to the minimum time interval between 2 GeoMoby service calls (in seconds) - Recommended 60s.
+
 String updateIntervalSeconds = "60";
+
 GeoMoby.setUpdateInterval(updateIntervalSeconds);
 
 
 //  Silence Time is the time window when no notifications can be sent (24 hour)
+
 String silence_start = "23";
+
 String silence_stop = "05";
+
 GeoMoby.setSilenceTimeStart(silence_start);
+
 GeoMoby.setSilenceTimeStop(silence_stop);
 
 // Turn development mode on and off (yes/no)

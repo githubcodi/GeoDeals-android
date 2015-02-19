@@ -6,7 +6,7 @@ GeoDeals demo app for Android.
 Set Up
 ================
 
-// Your GeoMoby API Key
+**Your GeoMoby API Key**
 
 String api_key="8df4c81d79e332df65a963";
 

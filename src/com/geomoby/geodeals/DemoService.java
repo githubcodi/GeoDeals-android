@@ -106,14 +106,14 @@ public class DemoService extends Activity {
 		/*
 		*  Set the GeoMoby Outdoor Location service - 5-10m accuracy outdoors and about 20m indoors (no iBeacons needed)
 		*/
-		GeoMoby.setOutdoorLocationService("false");
+		GeoMoby.setOutdoorLocationService("true");
 		
 		/*
 		*  Set the GeoMoby iBeacon Location service
 		*
 		*  You can set both indoor and outdoor to "true" for a end-to-end monitoring experience
 		*/
-		GeoMoby.setIndoorLocationService("true");
+		GeoMoby.setIndoorLocationService("false");
 		GeoMoby.setUUID("e2c56db5-dffb-48d2-b060-d0f5a71096e0");
 		
 		spref = getSharedPreferences(PREF_NAME, MODE_PRIVATE);

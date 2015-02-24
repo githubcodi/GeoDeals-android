@@ -1,7 +1,7 @@
 <a href="http://www.geomoby.com/"><img alt="GeoMoby logo" align="right" width="150" height="50" src="http://www.geomoby.com/images/geomoby/GeoMobySmallColor.png" /></a> GeoMoby Android Demo App - GeoDeals
 =================
 
-[GeoMoby SDK](http://www.geomoby.com/) is the all-in-one geofencing and user engagement platform that utilises all location services available on your mobile device from GPS, Wi-Fi... to Bluetooth Low Energy with only 1% battery drain!. You can create any geofences and microfences (iBeacons) you want: it is unlimited.
+[GeoMoby SDK](http://www.geomoby.com/) is the all-in-one geofencing and user engagement platform that utilises all location services available on your mobile device from GPS, Wi-Fi... to Bluetooth Low Energy with only 1% battery drain!. You can create any geofences and microfences (iBeacons) you want: it is unlimited!
 
 The GeoMoby Android SDK allows your Android app to detect when it is in proximity of a specific points of interests (park, mall, venue, concert...) and trigger a message to your app. Catch the message and offer your user a new experience: play a video, sound, display a picture, trigger a payment transaction...
 
@@ -16,7 +16,7 @@ Changelog
 What does the sample app do?
 ============================
 
-The app simply display any data associated with that geofence/microfence based on criteria entered in your GeoMoby dashboard.
+The app simply displays any data associated with that geofence/microfence based on criteria entered in your GeoMoby dashboard.
 
 How to run the sample app
 =========================

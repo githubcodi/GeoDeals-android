@@ -1,4 +1,4 @@
-<a href="http://www.geomoby.com/"><img alt="GeoMoby logo" align="right" width="150" height="50" src="http://www.geomoby.com/images/geomoby/GeoMobySmallColor.png" /></a> GeoMoby Android Demo App - GeoDeals
+<a href="http://www.geomoby.com/"><img alt="GeoMoby logo" align="right" width="150" height="50" src="http://www.geomoby.com/images/geomoby/GeoMobySmallColor.png" /></a> GeoMoby Demo App - GeoDeals
 =================
 
 [GeoMoby SDK](http://www.geomoby.com/) is the all-in-one geofencing and user engagement platform that utilises all location services available on your mobile device from GPS, Wi-Fi... to Bluetooth Low Energy with only 1% battery drain!. You can create any geofences and microfences (iBeacons) you want: it is unlimited!
@@ -48,14 +48,14 @@ The sample app requires devices running Android 3.2 or newer.
 
   //Turn development mode on and off (yes/no)
   //dev_mode=true consumes a bit more battery
-  //dev_mode=false is the production mode as it gets the most out of our optimised battery management**
+  //dev_mode=false is the production mode as it gets the most out of our optimised battery management
   String dev_mode = "true";
   GeoMoby.setDevMode(dev_mode);
 
-  //Set the GeoMoby Outdoor Location service - 5-10m accuracy outdoors and about 20m indoors (no   iBeacons needed)
+  //Set the GeoMoby Outdoor Location service - 5-10m accuracy outdoors and about 20m indoors (no iBeacons needed)
   GeoMoby.setOutdoorLocationService("false");
 
-  //Set the GeoMoby iBeacon Location service.You can set both indoor and outdoor to "true" for a end-to-end monitoring experience**
+  //Set the GeoMoby iBeacon Location service.You can set both indoor and outdoor to "true" for a end-to-end monitoring experience
 GeoMoby.setIndoorLocationService("true");		
 GeoMoby.setUUID("e2c56db5-dffb-48d2-b060-d0f5a71096e0");
   </pre>
@@ -66,7 +66,7 @@ Note: Ensure that using ["Android SDK Manager"](http://developer.android.com/too
 
 Android Guide
 ================
-<a http://geomoby.com/developers/tutorial/android/android-getting-started.php> Android Installation Guide</a>
+<a href="http://geomoby.com/developers/tutorial/android/android-getting-started.php"> Android Installation Guide</a>
 
 Contribution
 ============

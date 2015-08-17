@@ -20,11 +20,16 @@
  */
 package com.geomoby.geodeals;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
+import android.bluetooth.BluetoothManager;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,9 +57,9 @@ public class DemoService extends Activity {
 		setContentView(R.layout.geomoby_main);
 		mContext = this;
 		
-		GeoMoby.init(this);
-
 		mToggle = (CompoundButton) findViewById(R.id.togglebutton); 
+		
+		GeoMoby.init(this);
 		
 		/*
 		 * Set your GeoMoby Api Key (required)
@@ -91,7 +96,7 @@ public class DemoService extends Activity {
 		 *  Silence Time is the time window when no notifications can be sent (24 hour)
 		 */
 		String silence_start = "01";
-		String silence_stop = "05";
+		String silence_stop = "06";
 		GeoMoby.setSilenceTimeStart(silence_start);
 		GeoMoby.setSilenceTimeStop(silence_stop);
 
@@ -114,7 +119,8 @@ public class DemoService extends Activity {
 		*  You can set both indoor and outdoor to "true" for a end-to-end monitoring experience
 		*/
 		GeoMoby.setIndoorLocationService("false");
-		GeoMoby.setUUID("e2c56db5-dffb-48d2-b060-d0f5a71096e0");
+		GeoMoby.setUUID("12345678-905F-4436-91F8-E602F514C96D");
+		
 		
 		spref = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
 		isCheckedStatus = spref.getBoolean("check", false);  //default is false
@@ -146,6 +152,18 @@ public class DemoService extends Activity {
 					editor.commit();
 
 				}else{
+					
+					if (android.os.Build.VERSION.SDK_INT >= 18){
+						if(!checkBlueToothLEAvailability()) {
+							Log.w(TAG,"Bluetooth not activated!");
+							Toast.makeText(getApplicationContext(), "Please, activate your Bluetooth",Toast.LENGTH_LONG).show();
+							return;
+						}
+					}else{
+							Log.w(TAG,"Your phone is not compatible with Bluetooth LTE");
+							Toast.makeText(getApplicationContext(), "Sorry, your phone is not compatible with Bluetooth LTE",Toast.LENGTH_LONG).show();
+							return;
+					}
 
 					mToggle.setPressed(true);
 
@@ -187,11 +205,28 @@ public class DemoService extends Activity {
 	@Override
 	protected void onPause() {
 		super.onPause();
-		onDestroy();
 	}
 
 	@Override
 	public void onBackPressed() {
 		onDestroy();
 	}	
+	
+	/**
+	 * Check if Bluetooth LE is supported by this Android device, and if so, make sure it is enabled.
+	 * Throws a RuntimeException if Bluetooth LE is not supported.  (Note: The Android emulator will do this)
+	 * @return false if it is supported and not enabled
+	 */
+	@TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
+	public boolean checkBlueToothLEAvailability() {
+		if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
+			Log.e(TAG,"Bluetooth LE not supported by this device");  
+		}		
+		else {
+			if (((BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE)).getAdapter().isEnabled()){
+				return true;
+			}
+		}	
+		return false;
+	}
 }

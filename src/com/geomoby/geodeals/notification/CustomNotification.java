@@ -52,7 +52,6 @@ public class CustomNotification extends Activity implements OnGestureListener, O
 
 	private final String SETTING_LNG="longitude";
 	private final String SETTING_LAT="latitude";
-	//GestureDetector gd = null; 
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +65,7 @@ public class CustomNotification extends Activity implements OnGestureListener, O
 		Intent intent = getIntent();
 
 		ArrayList<GeoMessage> geoMessage = intent.getParcelableArrayListExtra("GeoMessage");
-
+		
 		String title = geoMessage.get(0).title;
 		String link = geoMessage.get(0).siteURL;
 		String image_url = geoMessage.get(0).imageURL;
@@ -77,7 +76,6 @@ public class CustomNotification extends Activity implements OnGestureListener, O
 		int beaconProximity = geoMessage.get(0).micronodeProximity;
 		int notification_id = geoMessage.get(0).id;
 
-
 		Button btnClose = (Button) findViewById(R.id.close);
 		btnClose.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
@@ -87,7 +85,7 @@ public class CustomNotification extends Activity implements OnGestureListener, O
 		});
 
 
-		Button btnNearest = (Button) findViewById(R.id.nearest);
+		/*Button btnNearest = (Button) findViewById(R.id.nearest);
 		btnNearest.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				SharedPreferences settingsActivity = CustomNotification.this.getSharedPreferences("GeoMobyPrefs", MODE_PRIVATE);
@@ -99,7 +97,7 @@ public class CustomNotification extends Activity implements OnGestureListener, O
 				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 				context.startActivity(intent);
 			}
-		});
+		});*/
 
 		Typeface font = Typeface.createFromAsset(getAssets(), "Bitter-Bold.otf");
 

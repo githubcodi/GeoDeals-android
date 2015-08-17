@@ -45,7 +45,7 @@ public class DemoService extends Activity {
 	private static final String TAG = "** Demo Service **";
 	private static final String PREF_NAME="checked";
 	private static SharedPreferences spref;
-	
+
 	boolean isCheckedStatus;
 	CompoundButton mToggle;
 	public Context mContext;
@@ -56,17 +56,17 @@ public class DemoService extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.geomoby_main);
 		mContext = this;
-		
+
 		mToggle = (CompoundButton) findViewById(R.id.togglebutton); 
-		
+
 		GeoMoby.init(this);
-		
+
 		/*
 		 * Set your GeoMoby Api Key (required)
 		 */
-		String api_key="8df4c81d79e332df65a963";
+		String api_key="your-api-key";
 		GeoMoby.setApiKey(api_key);
-		
+
 		/*
 		 *  Save the tags in the GeoMoby shared preferences in private mode for the user. These tags will be used
 		 *  to segment your audience when creating your proximity alerts. Please make sure that they match with
@@ -78,14 +78,14 @@ public class DemoService extends Activity {
 		 */
 		String tags = "";
 		GeoMoby.setTags(tags);
-		
+
 		/*
 		 *  Filter events based on users activity (still,walking,cycling,driving,tilting - default:walking - debug:tilting)
 		 *  You can also filter several activities using '|' as a separator (tilting|walking)
 		 */  
 		String motion_filter = "walking|still";
 		GeoMoby.setMotionFilter(motion_filter);
-		
+
 		/*
 		 *  This setting corresponds to the minimum time interval between 2 GeoMoby service calls (in seconds) - Recommended 60s.
 		 */
@@ -102,26 +102,28 @@ public class DemoService extends Activity {
 
 
 		/* Turn development mode on and off (yes/no)
-		* dev_mode=true consumes a bit more battery 
-		* dev_mode=false is the production mode as it gets the most out of our optimised battery management
-		*/
+		 * dev_mode=true consumes a bit more battery 
+		 * dev_mode=false is the production mode as it gets the most out of our optimised battery management
+		 */
 		String dev_mode = "true";
 		GeoMoby.setDevMode(dev_mode);
-		
+
 		/*
-		*  Set the GeoMoby Outdoor Location service - 5-10m accuracy outdoors and about 20m indoors (no iBeacons needed)
-		*/
-		GeoMoby.setOutdoorLocationService("true");
-		
+		 *  Set the GeoMoby Outdoor Location service - 5-10m accuracy outdoors and about 20m indoors (no iBeacons needed)
+		 */
+		final String outdoor = "true";
+		GeoMoby.setOutdoorLocationService(outdoor);
+
 		/*
-		*  Set the GeoMoby iBeacon Location service
-		*
-		*  You can set both indoor and outdoor to "true" for a end-to-end monitoring experience
-		*/
-		GeoMoby.setIndoorLocationService("false");
+		 *  Set the GeoMoby iBeacon Location service
+		 *
+		 *  You can set both indoor and outdoor to "true" for a end-to-end monitoring experience
+		 */
+		final String indoor = "false";
+		GeoMoby.setIndoorLocationService(indoor);
 		GeoMoby.setUUID("12345678-905F-4436-91F8-E602F514C96D");
-		
-		
+
+
 		spref = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
 		isCheckedStatus = spref.getBoolean("check", false);  //default is false
 
@@ -133,7 +135,7 @@ public class DemoService extends Activity {
 		}else{
 			mToggle.setChecked(true);
 		}
-		
+
 		/*
 		 *  Monitor the toggle - Our SDK will ensure that all services are running/stopping properly
 		 */
@@ -152,23 +154,24 @@ public class DemoService extends Activity {
 					editor.commit();
 
 				}else{
-					
-					if (android.os.Build.VERSION.SDK_INT >= 18){
-						if(!checkBlueToothLEAvailability()) {
-							Log.w(TAG,"Bluetooth not activated!");
-							Toast.makeText(getApplicationContext(), "Please, activate your Bluetooth",Toast.LENGTH_LONG).show();
-							return;
-						}
-					}else{
+
+					if(indoor.contains("true")){
+						if (android.os.Build.VERSION.SDK_INT >= 18){
+							if(!checkBlueToothLEAvailability()) {
+								Log.w(TAG,"Bluetooth not activated!");
+								Toast.makeText(getApplicationContext(), "Please, activate your Bluetooth",Toast.LENGTH_LONG).show();
+								return;
+							}
+						}else{
 							Log.w(TAG,"Your phone is not compatible with Bluetooth LTE");
 							Toast.makeText(getApplicationContext(), "Sorry, your phone is not compatible with Bluetooth LTE",Toast.LENGTH_LONG).show();
 							return;
+						}
 					}
 
 					mToggle.setPressed(true);
 
 					// Start the GeoMoby tracking service
-					//startService(new Intent(DemoService.this, GeomobyStartService.class));
 					GeoMoby.start();
 
 					SharedPreferences.Editor editor = spref.edit();
@@ -211,7 +214,7 @@ public class DemoService extends Activity {
 	public void onBackPressed() {
 		onDestroy();
 	}	
-	
+
 	/**
 	 * Check if Bluetooth LE is supported by this Android device, and if so, make sure it is enabled.
 	 * Throws a RuntimeException if Bluetooth LE is not supported.  (Note: The Android emulator will do this)

@@ -84,7 +84,6 @@ public class CustomNotification extends Activity implements OnGestureListener, O
 			}
 		});
 
-
 		/*Button btnNearest = (Button) findViewById(R.id.nearest);
 		btnNearest.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {

@@ -47,7 +47,7 @@
         android:layout_alignParentBottom="true"
         android:orientation="horizontal" >
 
-        <Button
+        <!--Button
             android:id="@+id/nearest"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
@@ -55,7 +55,7 @@
             android:background="@drawable/submit"
             android:text="@string/nearest"
             android:textColor="#FFFFFF"
-            android:textStyle="bold" />
+            android:textStyle="bold" /-->
 
         <Button
             android:id="@+id/close"

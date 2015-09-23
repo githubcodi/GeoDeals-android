@@ -8,7 +8,7 @@ The GeoMoby Android SDK allows your Android app to detect when it is in proximit
 Changelog
 =========
 
-** Android SDK 2.7 **	
+**Android SDK 2.7**	
 * Updated layout to show edit texts and checkboxes
 * Added ability to show multiple notifications in status bar for testing
 * Bug fixes
@@ -32,7 +32,7 @@ The sample app requires devices running Android 3.2 or newer.
     String api_key="8df4c81d79e332df65a963";
     GeoMoby.setApiKey(api_key);
 
-    //Filter events based on users activity (still,walking,cycling,driving,tilting - default:walking - debug:tilting). 
+   //Filter events based on users activity (still,walking,cycling,driving,tilting - default:walking - debug:tilting). 
    //You can also filter several activities using '|' as a separator (tilting|walking)
    String motion_filter = "walking|still";
    GeoMoby.setMotionFilter(motion_filter);

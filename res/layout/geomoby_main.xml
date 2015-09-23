@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
-    android:layout_height="match_parent"
+    android:layout_height="fill_parent"
     android:background="#FAFAFA"
     android:orientation="vertical" >
 
@@ -12,31 +12,114 @@
         tools:context=".MainActivity" />
 
     <ImageView
+        android:id="@+id/logo"
         android:layout_width="300dp"
         android:layout_height="200dp"
-        android:layout_marginTop="50px"
+        android:layout_marginTop="50dp"
         android:layout_centerHorizontal="true"
         android:contentDescription="@string/splash_desc"
         android:src="@drawable/geomoby_logo" />
 
-    <ToggleButton
-        android:id="@+id/togglebutton"
-        android:layout_width="250dip"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:background="@drawable/submit"
-        android:textColor="#FFFFFF"
-        android:textOff="@string/monitored_service_on"
-        android:textOn="@string/monitored_service_off"
-        android:textStyle="bold" />
-
-    <!--TextView
+    <RelativeLayout
+        android:id="@+id/rl_main"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_below="@id/togglebutton"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/logo"
         android:gravity="center"
-        android:text="@string/disclaimer"
-        android:textColor="#0088D7"
-        android:textSize="12sp" /-->
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp" >
+
+         <LinearLayout
+             android:id="@+id/ll_apiKey"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content">
+        
+	        <TextView
+	            android:id="@+id/tv_apiKey"
+		        android:layout_width="wrap_content"
+		    	android:layout_height="wrap_content"
+		        android:gravity="center"
+		        android:text="@string/api_key"
+		        android:textColor="#0088D7"
+		        android:textSize="12sp" />
+	        
+	        <EditText
+	            android:id="@+id/et_apiKey"
+		        android:layout_width="fill_parent"
+	    		android:layout_height="wrap_content"
+		        android:textColor="#0088D7"
+		        android:textSize="12sp" 
+		        android:imeOptions="actionDone"
+    			android:singleLine="true"
+    			android:gravity="end"/>
+		</LinearLayout>
+		
+          <CheckedTextView
+	        android:id="@+id/ctv_outdoor"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_centerHorizontal="true"
+	        android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+	        android:checked="true"
+	        android:layout_marginTop="20dp"
+	        android:text="@string/outdoor" 
+	        android:layout_below="@+id/ll_apiKey"
+	        android:textColor="#0088D7"
+	        android:textSize="12sp"/>
+		
+          <CheckedTextView
+	        android:id="@+id/ctv_indoor"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_centerHorizontal="true"
+	        android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+	        android:checked="false"
+	        android:layout_marginTop="20dp"
+	        android:text="@string/indoor" 
+	        android:layout_below="@+id/ctv_outdoor"
+	        android:textColor="#0088D7"
+	        android:textSize="12sp"/>
+          
+        <LinearLayout
+            android:id="@+id/ll_uuid"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@+id/ctv_indoor"
+	        android:visibility="gone">
+        
+	        <TextView
+	            android:id="@+id/tv_uuid"
+		        android:layout_width="wrap_content"
+		    	android:layout_height="wrap_content"
+		        android:gravity="center"
+		        android:text="@string/uuid"
+		        android:textColor="#0088D7"
+		        android:textSize="12sp" />
+	        
+	        <EditText
+	            android:id="@+id/et_uuid"
+		        android:layout_width="fill_parent"
+	    		android:layout_height="wrap_content"
+		        android:textColor="#0088D7"
+		        android:textSize="12sp" 
+		        android:imeOptions="actionDone"
+    			android:singleLine="true"
+    			android:gravity="end"/>
+		</LinearLayout>
+		
+         <Switch
+	         android:id="@+id/togglebutton"
+	         android:layout_width="wrap_content"
+	         android:layout_height="wrap_content"
+	         android:layout_below="@+id/ll_uuid"
+	         android:layout_centerHorizontal="true"
+	         android:layout_gravity="center_horizontal"
+	         android:textColor="#FFFFFF"
+	         android:textStyle="bold" />
+        
+    </RelativeLayout>
+    
+    
 
 </RelativeLayout>

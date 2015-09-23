@@ -50,161 +50,104 @@ import com.geomoby.geodeals.R;
 
 public class CustomNotification extends Activity implements OnGestureListener, OnDoubleTapListener {
 
-	private final String SETTING_LNG="longitude";
-	private final String SETTING_LAT="latitude";
+	private static final String TAG = "** GeoMoby Custom Notification **";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		//Hide Title Bar
+		// Hide Title Bar
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
+		// Get the layout
 		setContentView(R.layout.geomoby_offer);
 
-		Intent intent = getIntent();
+		try{
+			// Get the extras passed by the receiver
+			Intent intent = getIntent();
+			Bundle bundle = intent.getExtras();
+			
+			// Parse the extra
+			ArrayList<GeoMessage> geoMessage = bundle.getParcelableArrayList("GeoMessage");
 
-		ArrayList<GeoMessage> geoMessage = intent.getParcelableArrayListExtra("GeoMessage");
-		
-		String title = geoMessage.get(0).title;
-		String link = geoMessage.get(0).siteURL;
-		String image_url = geoMessage.get(0).imageURL;
-		String description = geoMessage.get(0).message;
-		final double latitude = Double.valueOf(geoMessage.get(0).latitude);
-		final double longitude = Double.valueOf(geoMessage.get(0).longitude);
-		String beaconName = geoMessage.get(0).micronodeName;
-		int beaconProximity = geoMessage.get(0).micronodeProximity;
-		int notification_id = geoMessage.get(0).id;
+			// Retrieve title and description
+			String title = geoMessage.get(0).title;
+			String description = geoMessage.get(0).message;
+
+			/*
+			 *  Below the other values returned by our server
+			 */
+			//String link = geoMessage.get(0).siteURL;
+			//String image_url = geoMessage.get(0).imageURL;
+			//final double latitude = Double.valueOf(geoMessage.get(0).latitude);
+			//final double longitude = Double.valueOf(geoMessage.get(0).longitude);
+			//String beaconName = geoMessage.get(0).micronodeName;
+			//int beaconProximity = geoMessage.get(0).micronodeProximity;
+			//int notification_id = geoMessage.get(0).id;
+
+			// Create a new font
+			Typeface font = Typeface.createFromAsset(getAssets(), "Bitter-Bold.otf");
+
+			// Populate title TextView
+			TextView tvTitle = (TextView) findViewById(R.id.title);
+			tvTitle.setTypeface(font);
+			tvTitle.setText(title);
+
+			// Populate description TextView
+			TextView tvDesc = (TextView) findViewById(R.id.description);
+			tvDesc.setTypeface(font);
+			tvDesc.setText(description);
+
+			//Notify GeoMoby server that user has opened the notification - Not supported yet.
+			//new ClickThroughAsyncTask(this).execute(notification_id);
+
+		} catch (Throwable t){
+			Log.d(TAG,"Parcelable Message: "+t.getMessage());
+
+		}
 
 		Button btnClose = (Button) findViewById(R.id.close);
 		btnClose.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				// Perform action on click   
+				// Close the notification pop-up  
 				CustomNotification.this.finish();
 			}
 		});
-
-		/*Button btnNearest = (Button) findViewById(R.id.nearest);
-		btnNearest.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				SharedPreferences settingsActivity = CustomNotification.this.getSharedPreferences("GeoMobyPrefs", MODE_PRIVATE);
-				final double myLatitude = Double.valueOf(settingsActivity.getString(SETTING_LAT, ""));
-				final double myLongitude = Double.valueOf(settingsActivity.getString(SETTING_LNG, ""));
-
-				Context context = CustomNotification.this;
-				Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?f=d&saddr="+myLatitude+","+myLongitude+"&daddr="+latitude+","+longitude+ "&dirflg=w"));
-				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				context.startActivity(intent);
-			}
-		});*/
-
-		Typeface font = Typeface.createFromAsset(getAssets(), "Bitter-Bold.otf");
-
-		TextView tvTitle = (TextView) findViewById(R.id.title);
-		tvTitle.setTypeface(font);
-		tvTitle.setText(title);
-
-		TextView tvDesc = (TextView) findViewById(R.id.description);
-		tvDesc.setTypeface(font);
-		tvDesc.setText(description);
-
-
-		TextView tvLink = (TextView) findViewById(R.id.link);
-		tvLink.setTypeface(font);
-		String desc = "<a href=\""+link+"\">Demo Link</a>";
-		tvLink.setText(Html.fromHtml(desc));
-		tvLink.setMovementMethod(LinkMovementMethod.getInstance());
-
-		// Warning - Big bitmap images might create errors
-		if(!image_url.equals(""))
-			new DownloadImageTask((ImageView) findViewById(R.id.image)).execute(image_url);
-
-		//Notify GeoMoby server that user has opened the notification
-		//new ClickThroughAsyncTask(this).execute(notification_id);
-	}
-
-	private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-		ImageView bmImage;
-
-		public DownloadImageTask(ImageView bmImage) {
-			this.bmImage = bmImage;
-		}
-
-		protected Bitmap doInBackground(String... urls) {
-			String urldisplay = urls[0];
-			Bitmap mIcon11 = null;
-			try {
-				InputStream in = new java.net.URL(urldisplay).openStream();
-				mIcon11 = BitmapFactory.decodeStream(in);
-			} catch (Exception e) {
-				Log.e("Error", e.getMessage());
-				e.printStackTrace();
-			}
-			return mIcon11;
-		}
-
-		protected void onPostExecute(Bitmap result) {
-			bmImage.setImageBitmap(result);
-		}
 	}
 
 	@Override
 	public boolean onDoubleTap(MotionEvent e) {
+		// Close the notification pop-up
 		CustomNotification.this.finish();
 		return false;
 	}
 
 	@Override
 	public boolean onDoubleTapEvent(MotionEvent e) {
+		// Close the notification pop-up
 		CustomNotification.this.finish();
 		return false;
 	}
 
 	@Override
-	public boolean onSingleTapConfirmed(MotionEvent e) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+	public boolean onSingleTapConfirmed(MotionEvent e) {return false;}
 
 	@Override
-	public boolean onDown(MotionEvent e) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+	public boolean onDown(MotionEvent e) {return false;}
 
 	@Override
-	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
-			float velocityY) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,float velocityY) {return false;}
 
 	@Override
-	public void onLongPress(MotionEvent e) {
-		// TODO Auto-generated method stub
-
-	}
+	public void onLongPress(MotionEvent e) {}
 
 	@Override
-	public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
-			float distanceY) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+	public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,float distanceY) {return false;}
 
 	@Override
-	public void onShowPress(MotionEvent e) {
-		// TODO Auto-generated method stub
-
-	}
+	public void onShowPress(MotionEvent e) {}
 
 	@Override
-	public boolean onSingleTapUp(MotionEvent e) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-
-
+	public boolean onSingleTapUp(MotionEvent e) {return false;}
 }
 

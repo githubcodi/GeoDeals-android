@@ -3,8 +3,6 @@
 
     <string name="app_name">GeoMoby - Demo App</string>
     <string name="title">GeoMoby - Demo App</string>
-    <string name="monitored_service_on">Start The Geo-Service</string>
-    <string name="monitored_service_off">Stop The Geo-Service</string>
     <string name="splash_desc">GeoMoby Demo</string>
     <string name="nearest">DIRECTIONS</string>
     <string name="close">CLOSE</string>
@@ -12,5 +10,10 @@
     <string name="notification_text">Click Now!</string>
     <string name="notification_ticker">Geo Message!</string>
     <string name="disclaimer">By turning on this service you agree to let GeoMoby track your location in order to provide the best service to you. We may require using GPS and other battery draining technology in the background and suggest you turn this off when do not require our services.</string>
-
+ 	<string name="api_key">Your API Key</string>
+ 	<string name="outdoor">Outdoor Geolocation</string>
+ 	<string name="indoor">Indoor Geolocation</string>
+ 	<string name="uuid">Enter UUID</string>
+ 	
+ 	
 </resources>

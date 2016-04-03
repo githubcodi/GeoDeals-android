@@ -47,6 +47,7 @@ import android.widget.TextView;
 
 import com.geomoby.async.GeoMessage;
 import com.geomoby.geodeals.R;
+import com.squareup.picasso.Picasso;
 
 public class CustomNotification extends Activity implements OnGestureListener, OnDoubleTapListener {
 
@@ -78,7 +79,7 @@ public class CustomNotification extends Activity implements OnGestureListener, O
 			 *  Below the other values returned by our server
 			 */
 			//String link = geoMessage.get(0).siteURL;
-			//String image_url = geoMessage.get(0).imageURL;
+			String image_url = geoMessage.get(0).imageURL;
 			//final double latitude = Double.valueOf(geoMessage.get(0).latitude);
 			//final double longitude = Double.valueOf(geoMessage.get(0).longitude);
 			//String beaconName = geoMessage.get(0).micronodeName;
@@ -97,6 +98,10 @@ public class CustomNotification extends Activity implements OnGestureListener, O
 			TextView tvDesc = (TextView) findViewById(R.id.description);
 			tvDesc.setTypeface(font);
 			tvDesc.setText(description);
+
+			ImageView tvImage = (ImageView) findViewById(R.id.image);
+			Picasso.with(this).setLoggingEnabled(true);
+			Picasso.with(this).load(image_url).into(tvImage);
 
 			//Notify GeoMoby server that user has opened the notification - Not supported yet.
 			//new ClickThroughAsyncTask(this).execute(notification_id);

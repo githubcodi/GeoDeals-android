@@ -8,9 +8,7 @@ The GeoMoby Android SDK allows your Android app to detect when it is in proximit
 Changelog
 =========
 
-**Android SDK 2.7**	
-* Updated layout to show edit texts and checkboxes
-* Added ability to show multiple notifications in status bar for testing
+**Android SDK 2.8**
 * Bug fixes
 
 
@@ -77,6 +75,6 @@ For bugs, feature requests, or other questions, [file an issue](https://github.c
 License
 =======
 
-Copyright 2015 [GeoMoby Pty Ltd](http://www.geomoby.com/)
+Copyright 2016 [GeoMoby Pty Ltd](http://www.geomoby.com/)
 
  

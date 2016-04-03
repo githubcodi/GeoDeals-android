@@ -10,6 +10,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
@@ -79,6 +81,7 @@ public  class GeodealsMessageReceiver extends BroadcastReceiver {
 				
 				// Manage notifications differently according to Android version
 				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+					Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 					NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
 
 					builder
@@ -91,11 +94,12 @@ public  class GeodealsMessageReceiver extends BroadcastReceiver {
 
 					// Setting Notification Flags
 					builder.setDefaults(Notification.DEFAULT_ALL); //Vibrate, Sound and Led
+					//builder.setSound(alarmSound);
 
 			        // Because the ID remains unchanged, the existing notification is updated.
 					notificationManager.notify(notifyID,builder.build());
 
-				}else{
+				}/*else{
 					Notification notification = new Notification(icon,desc,System.currentTimeMillis());
 
 					// Setting Notification Flags
@@ -108,7 +112,7 @@ public  class GeodealsMessageReceiver extends BroadcastReceiver {
 					// Send the notification
 					// If the ID remains unchanged, the existing notification is updated.
 					notificationManager.notify(notifyID, notification);
-				}
+				}*/
 			}catch ( JsonParseException e) {
 				Log.i(TAG,"This is not a GeoMoby notification");
 				throw new RuntimeException(e);

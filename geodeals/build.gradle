@@ -1,0 +1,110 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:+'
+    }
+}
+apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
+
+repositories {
+    jcenter()
+}
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.1"
+
+    defaultConfig {
+        applicationId "com.geomoby.geodeals"
+        minSdkVersion 14
+        targetSdkVersion 22
+        versionCode 1
+        versionName "1.0.0"
+        multiDexEnabled true
+    }
+
+    signingConfigs{
+        release{
+            //storeFile file("geomoby.keystore")
+            //storePassword = keystorePassword
+            //keyAlias = appAlias
+            //keyPassword = appPassword
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            signingConfig signingConfigs.release
+            zipAlignEnabled true
+        }
+
+        debug {
+            minifyEnabled false
+            versionNameSuffix '-debug'
+            proguardFile 'proguard-rules-debug.txt'
+            zipAlignEnabled true
+        }
+    }
+
+    productFlavors {
+        production {
+            applicationId "com.geomoby.geodeals"
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
+
+}
+
+dependencies {
+    //compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile files('libs/geomoby-lib-bundle-release.jar')
+
+    // Multidex support
+    compile 'com.android.support:multidex:1.0.0'
+    // v7 Support library
+    compile('com.android.support:appcompat-v7:23.1.0') {
+        exclude module: 'support-v4'
+    }
+    compile 'com.android.support:support-v4:23.1.0'
+    compile 'com.android.support:design:23.1.0'
+
+    // Retrofit REST
+    compile 'com.squareup.retrofit:retrofit:1.9.0'
+
+    // OKHttp
+    compile 'com.squareup.okhttp:okhttp-urlconnection:2.2.0'
+    compile 'com.squareup.okhttp:okhttp:2.1.0'
+
+    // Okio
+    compile 'com.squareup.okio:okio:1.6.0'
+
+    // Parceler
+    compile 'org.parceler:parceler-api:0.2.16'
+    provided 'org.parceler:parceler:0.2.16'
+
+    // Google Play Services
+    compile 'com.google.android.gms:play-services:8.3.0'
+
+    // Picasso
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    // Google Analytics
+    //compile 'com.google.android.gms:play-services-analytics:8.1.0'
+    // Joda Time
+    //compile 'joda-time:joda-time:2.8.2'
+    
+    // GSON
+    compile 'com.google.code.gson:gson:2.3.1'
+}

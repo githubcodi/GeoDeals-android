@@ -63,8 +63,6 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.geomoby.GeoMoby;
-
 public class DemoService extends Activity {
 
 	private static final String TAG = "** GeoMoby Demo Service **";
@@ -253,13 +251,13 @@ public class DemoService extends Activity {
 		 *  Filter events based on users activity (still,walking,cycling,running,driving,tilting - default:walking - debug:still)
 		 *  You can also filter several activities using '|' as a separator (tilting|walking)
 		 */  
-		String motion_filter = "walking|tilting";
+		String motion_filter = "walking|tilting|still|unknown";
 		GeoMoby.setMotionFilter(motion_filter);
 
 		/*
 		 *  This setting corresponds to the average time interval between 2 GeoMoby service calls (in seconds) - Recommended 60s.
 		 */
-		String updateIntervalSeconds = "60";
+		String updateIntervalSeconds = "30";
 		GeoMoby.setUpdateInterval(updateIntervalSeconds);
 
 		/*

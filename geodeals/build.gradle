@@ -104,7 +104,7 @@ dependencies {
     //compile 'com.google.android.gms:play-services-analytics:8.1.0'
     // Joda Time
     //compile 'joda-time:joda-time:2.8.2'
-    
+
     // GSON
     compile 'com.google.code.gson:gson:2.3.1'
 }
